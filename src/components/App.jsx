@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 function App() {
 	const [inputUpdate, setInputUpdate] = useState("");
-	const [buttonUpdate, setButtonUpdate] = useState("");
+	// OBSERVATION 3: I think this state isn't quite useful. So Imma just comment it out. And comment out where you used it on line 17. Because you set the state, but you're not using the state's value anywhere.
+	// const [buttonUpdate, setButtonUpdate] = useState("");
 
 	function setToDo(event) {
 		const { value } = event.target;
@@ -13,8 +14,10 @@ function App() {
 	const [updates, setUpdates] = useState([]);
 
 	function setButton() {
-		setButtonUpdate(inputUpdate);
-		updates.push(inputUpdate);
+		// setButtonUpdate(inputUpdate);
+		// OBSERVATION 4: You're pushing to the state value directly, which is wrong. You should use the setUpdate function like I did right on line 20. But I guess I made it use the useState, so, it's on me.
+		// updates.push(inputUpdate);
+		setUpdates((prevState) => prevState.push(inputUpdate)); // btw, if you pass a function in a setState function like this, the argument represents the previous value and what is returned will be the new value.
 		console.log(updates);
 	}
 
@@ -30,7 +33,7 @@ function App() {
 				</button>
 			</div>
 			<div>
-				{/* OBSERVATION 2: This unordered list should actually be mapping the 'updates' state array. Right now, it's just displaying a single value. So, i'll comment this out and do the mapping  😁 */}
+				{/* OBSERVATION 2: This unordered list should actually be mapping the 'updates' state array. Right now, it's just displaying a single value. So, i'll comment this out and do the mapping underneath. 😁 */}
 				{/* <ul>
 					<li>{buttonUpdate}</li>
 				</ul> */}
