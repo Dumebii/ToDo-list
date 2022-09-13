@@ -15,9 +15,13 @@ function App() {
 
 	function setButton() {
 		// setButtonUpdate(inputUpdate);
-		// OBSERVATION 4: You're pushing to the state value directly, which is wrong. You should use the setUpdate function like I did right on line 20. But I guess I made it use the useState, so, it's on me.
+		// OBSERVATION 4: You're pushing to the state value directly, which is wrong. You should use the setUpdate function like I did right on line 22. But I guess I made it use the useState, so, it's on me.
 		// updates.push(inputUpdate);
-		setUpdates((prevState) => prevState.push(inputUpdate)); // btw, if you pass a function in a setState function like this, the argument represents the previous value and what is returned will be the new value.
+		const old = [...updates];
+		setUpdates(old); // !!UPDATE, I changed this part bc passing a function to the setUpdates, hence, getting prevUpdate wasn't necessary. Apparently, the .push() function was returning the length of the array, and I though it would return the new array. So I just changed it and made it push the new item outside the setUpdates function and update it separately after pushing.
+
+		// OBSERVATION 5: Also, I think I should clear the input field after adding an item to the array automatically. For that to work, we'd need to set {value=inputUpdate} in the input field on line 34.
+		setInputUpdate("");
 		console.log(updates);
 	}
 
@@ -27,7 +31,7 @@ function App() {
 				<h1>To-Do List</h1>
 			</div>
 			<div className="form">
-				<input onChange={setToDo} type="text" />
+				<input onChange={setToDo} type="text" value={inputUpdate} />
 				<button onClick={setButton}>
 					<span>Add</span>
 				</button>
@@ -38,8 +42,8 @@ function App() {
 					<li>{buttonUpdate}</li>
 				</ul> */}
 				<ul>
-					{updates.map((todoItem) => (
-						<li>{todoItem}</li>
+					{updates.map((todoItem, index) => (
+						<li key={index}>{todoItem}</li>
 					))}
 				</ul>
 			</div>
